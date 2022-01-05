@@ -1,0 +1,79 @@
+clear;
+
+a=6378137;
+e2=0.00669437999013;
+dane= load('dane_2.txt');
+
+%wsp lotniska
+phiB = 42.1782;
+lambdaB = 42.4935;
+hB = 111;
+
+% wsp lotu
+phi=dane(:,1); 
+lambda=dane(:,2);
+h=dane(:,3);
+
+% współrzędne samolotu
+N = (a./sqrt(1-e2 .* sind(phi) .* sind(phi)));
+x = (N+h).*cosd(phi).*cosd(lambda);
+y = (N+h).*cosd(phi).*sind(lambda);
+z = (N.*(1-e2)+h).*sind(phi);
+
+% lotniska współrzędne
+NB = (a./sqrt(1-e2.*sind(phiB)));
+XB = (NB+hB).*cosd(phiB).*cosd(lambdaB);
+YB = (NB+hB).*cosd(phiB).*sind(lambdaB);
+ZB = (NB.*(1-e2)+hB).*sind(phiB);
+
+% zamiana xyz na neu
+delta = [(x-XB)'
+         (y-YB)'
+         (z-ZB)'];
+
+macierz_obrt = [-sind(phiB).*cosd(lambdaB) -sind(lambdaB) cosd(phiB).*cosd(lambdaB)
+                -sind(phiB).*sind(lambdaB) cosd(lambdaB) cosd(phiB).*sind(lambdaB)
+                cosd(phiB) 0 sind(phiB)];
+
+macierz_obrt = transpose(macierz_obrt)
+
+neu = macierz_obrt * delta
+
+n = neu(1,:)';
+e = neu(2,:)';
+u = neu(3,:)';
+
+% macierze wsp xyz i neu
+xyz = [x y z];
+neu = [n e u];
+
+%odległość skośna
+s = sqrt(n.^n + e.^e + u.^u);
+
+%kąt zenitalny
+cosZenit = u ./ s
+zenit = acosd(cosZenit);
+
+%azymut
+tanAzymut = e ./ n;
+azymut = atand(tanAzymut);
+
+
+%wyrównanie azymutów
+ for i = 1:size(neu, 1)
+ if ((n(i, 1) < 0) && (e(i, 1) > 0)) || ((n(i, 1) < 0) && (e(i, 1) < 0))
+    azymut(i, 1) = azymut(i, 1) + 180
+ elseif ((n(i, 1) > 0) && (e(i, 1) < 0))
+     azymut(i, 1) = azymut(i, 1) + 360
+ end
+end
+
+
+%wizualizacja lotu w phi-lambda, xyz oraz neu 
+
+%geoscatter(phi,lambda,5,'ro');
+
+%plot3(x,y,z);
+
+%plot3(n,e,u);
+
