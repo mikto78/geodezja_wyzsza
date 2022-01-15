@@ -2,7 +2,7 @@ clear;
 
 a=6378137;
 e2=0.00669437999013;
-dane= load('dane_2.txt');
+dane= load('dane_1.txt');
 
 %wsp lotniska
 phiB = 42.1782;
