@@ -5,9 +5,9 @@ e2=0.00669437999013;
 dane= load('dane_1.txt');
 
 %wsp lotniska
-phiB = 42.1782;
-lambdaB = 42.4935;
-hB = 111;
+phiB = 52.2922;
+lambdaB = 4.7448;
+hB = 145;
 
 % wsp lotu
 phi=dane(:,1); 
