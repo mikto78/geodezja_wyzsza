@@ -2,4 +2,5 @@
 
 Zadanie 1:
 - zadanie 1
-- dane_2
+- dane_1
+- 
