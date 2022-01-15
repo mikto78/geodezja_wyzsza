@@ -6,6 +6,6 @@ Zadanie 1:
 - sprawozdanie_1
 
 Zadanie 2:
-- zadanie 2
+- geo 2
 - sprawozdanie_2
 -
