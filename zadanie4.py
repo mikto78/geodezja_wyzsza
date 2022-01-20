@@ -222,10 +222,10 @@ for i in range(len(fi)):
     s = skala_gk(ygk[i], new_xgk_filam[i])
     s_GK.append(s)
 
-    s = skala_1992(ygk[i], fiGK92[i])
+    s = skala_1992(new_y1992_gk[i], fiGK92[i])
     s_1992.append(s)
 
-    s = skala_2000(ygk[i], fiGK20[i])
+    s = skala_2000(new_y2000_gk[i], fiGK20[i])
     s_2000.append(s)
 
 print(s_GK)
